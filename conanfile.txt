@@ -1,0 +1,9 @@
+[requires]
+angelscript/2.35.0
+
+[generators]
+cmake
+
+[imports]
+lib, *.lib* -> ./
+lib, *.a* -> ./
