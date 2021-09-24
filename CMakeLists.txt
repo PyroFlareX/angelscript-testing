@@ -19,14 +19,18 @@ conan_basic_setup()
 
 # For Sources
 file(GLOB_RECURSE header RELATIVE ${CMAKE_SOURCE_DIR} "src/*.h")
-
 file(GLOB_RECURSE src RELATIVE ${CMAKE_SOURCE_DIR} "src/*.cpp")
+
+file(GLOB_RECURSE addonh RELATIVE ${CMAKE_SOURCE_DIR} "add_on/*.h")
+file(GLOB_RECURSE addons RELATIVE ${CMAKE_SOURCE_DIR} "add_on/*.cpp")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /STACK:1000000000")
 
-add_executable(angelscripttests ${src} ${header} )
+add_executable(angelscripttests ${src} ${header} ${addons} ${addonh} )
+
+target_include_directories(angelscripttests PUBLIC "add_on/")
 
 # For Linking
 target_link_libraries(angelscripttests ${CONAN_LIBS} Threads::Threads )
