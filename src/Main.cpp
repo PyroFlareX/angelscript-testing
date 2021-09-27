@@ -2,13 +2,6 @@
 
 #include "HelperFunctions.h"
 
-#include <scriptbuilder/scriptbuilder.h>
-
-void print(const std::string& in)
-{
-	std::cout << in;
-}
-
 int main()
 {
 	std::cout << "Output\n";
@@ -19,30 +12,8 @@ int main()
 
 	auto* engine = scrpt::getScriptEngine();
 
-	int result = engine->RegisterGlobalFunction("void print(const string &in)", asFUNCTION(print), asCALL_CDECL);
-	//assert(result >= 0);
 
-	CScriptBuilder builder;
-	result = builder.StartNewModule(engine, "TestingModule");
-	if(result < 0)
-	{
-		std::cout << "Failed to start new module\n";
-		return 0;
-	}
-
-	result = builder.AddSectionFromFile("TestScripts/test.as");
-	if(result < 0)
-	{
-		std::cout << "There was an error in the script\n";
-		return 0;
-	}
-
-	result = builder.BuildModule();
-	if(result < 0)
-	{
-		std::cout << "There was an error in the script\n";
-		return 0;
-	}
+	scrpt::createModule("TestingModule", "TestScripts/test.as");
 
 	asIScriptModule* testingModule = engine->GetModule("TestingModule");
 
@@ -57,7 +28,7 @@ int main()
 	asIScriptContext* context = engine->CreateContext();
 	context->Prepare(scriptFunction);
 
-	result = context->Execute();
+	int result = context->Execute();
 
 	if(result != asEXECUTION_FINISHED)
 	{

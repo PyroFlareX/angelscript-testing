@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <angelscript.h>
 
 namespace scrpt
@@ -8,7 +9,7 @@ namespace scrpt
 
 	asIScriptEngine* getScriptEngine();
 
-	
+	void createModule(const std::string& moduleName, const std::string& moduleFile);
 
 
 } // namespace scrpt
